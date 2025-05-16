@@ -1,0 +1,7 @@
+# Ignore binary executable
+matrix-mult-threads
+
+# Ignore Go cache files
+*.exe
+*.out
+*.test
