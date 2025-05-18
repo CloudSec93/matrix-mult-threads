@@ -2,8 +2,10 @@ package main
 
 import (
     "fmt"
+    "time"
     "github.com/CloudSec93/matrix-mult-threads/matrix"
 )
+
 
 func main() {
     var r1, c1, r2, c2 int
@@ -29,9 +31,27 @@ func main() {
     fmt.Println("Matrix B:")
     matrix.PrintMatrix(B)
 
-    fmt.Println("Multiplying matrices...")
-    result := matrix.Multiply(A, B)
+    var choice string
+    fmt.Print("Use parallel multiplication? (yes/no): ")
+    fmt.Scan(&choice)
 
-    fmt.Println("Result:")
+var result [][]int
+
+if choice == "yes" {
+    fmt.Println("Multiplying using goroutines...")
+    start := time.Now()
+    result = matrix.MultiplyParallel(A, B)
+    elapsed := time.Since(start)
+    fmt.Printf("Parallel multiplication took %s\n", elapsed)
+} else {
+    fmt.Println("Multiplying using normal method...")
+    start := time.Now()
+    result = matrix.Multiply(A, B)
+    elapsed := time.Since(start)
+    fmt.Printf("Sequential multiplication took %s\n", elapsed)
+}
+
+
+    fmt.Println("Result: ")
     matrix.PrintMatrix(result)
 }
